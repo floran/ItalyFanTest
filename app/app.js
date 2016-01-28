@@ -1,7 +1,7 @@
 'use strict';
 
 
-var myApp = angular.module('myItalyApp', ['ngRoute', 'ngCookies']);
+var myApp = angular.module('myItalyApp', ['ngRoute', 'ngCookies', 'ngResource']);
 
 
   myApp.config( ['$routeProvider', function($routeProvider) {
@@ -23,6 +23,13 @@ var myApp = angular.module('myItalyApp', ['ngRoute', 'ngCookies']);
     		controller:  'View1Ctrl'
   	});
   }]);
+
+
+myApp.factory('Qlist', ['$resource', function($resource){
+        return $resource('questions.json', {}, {
+                query: {method:'GET', params:{}, isArray:true}
+        });
+}]);
 
 
 myApp.controller('View1Ctrl', function($scope, $http) {	
