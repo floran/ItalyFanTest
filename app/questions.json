@@ -1,0 +1,106 @@
+[
+{
+	"sid": 1,
+	"id": "q1",
+	"name": "Кто из них итальянка?",
+	"answer1": "Ответ1",
+	"answer2": "Ответ2",
+	"answer3": "Ответ3",
+	"img1": "img/img1_1.jpg",
+	"img2": "img/img1_2.jpg",
+	"img3": "img/img1_3.jpg",
+	"correctAnswer": 1
+},
+
+{
+	"sid": 2,
+        "id": "q2",
+        "name": "Какой из этих архитектурных памятников находится в Италии?",
+        "answer1": "Ответ1",
+        "answer2": "Ответ2",
+        "answer3": "Ответ3",
+        "img1": "img/img2_1.jpg",
+        "img2": "img/img2_2.jpg",
+        "img3": "img/img2_3.jpg",
+        "correctAnswer": 2
+},
+
+{
+        "sid": 3,
+        "id": "q3",
+        "name": "Кто из них является итальянским модельером?",
+        "answer1": "Ответ1",
+        "answer2": "Ответ2",
+        "answer3": "Ответ3",
+        "img1": "img/img3_1.jpg",
+        "img2": "img/img3_2.jpg",
+        "img3": "img/img3_3.jpg",
+        "correctAnswer": 2
+},
+
+{
+        "sid": 4,
+        "id": "q4",
+        "name": "Какой из этих автомобилей является плодом итальянского автопрома?",
+        "answer1": "Ответ1",
+        "answer2": "Ответ2",
+        "answer3": "Ответ3",
+        "img1": "img/img4_1.jpg",
+        "img2": "img/img4_2.jpg",
+        "img3": "img/img4_3.jpg",
+        "correctAnswer": 1
+},
+
+{
+        "sid": 5,
+        "id": "q5",
+        "name": "Какая из этих эмблем является гербом Италии?",
+        "answer1": "Ответ1",
+        "answer2": "Ответ2",
+        "answer3": "Ответ3",
+        "img1": "img/img5_1.jpg",
+        "img2": "img/img5_2.jpg",
+        "img3": "img/img5_3.jpg",
+        "correctAnswer": 1
+},
+
+{
+        "sid": 6,
+        "id": "q6",
+        "name": "Кто из них итальянского происхождения?",
+        "answer1": "Ответ1",
+        "answer2": "Ответ2",
+        "answer3": "Ответ3",
+        "img1": "img/img6_1.jpg",
+        "img2": "img/img6_2.jpg",
+        "img3": "img/img6_3.jpg",
+        "correctAnswer": 1
+},
+
+{
+        "sid": 7,
+        "id": "q7",
+        "name": "Какой из символов является эмблемой итальянского футбольного клуба?",
+        "answer1": "Ответ1",
+        "answer2": "Ответ2",
+        "answer3": "Ответ3",
+        "img1": "img/img7_1.jpg",
+        "img2": "img/img7_2.jpg",
+        "img3": "img/img7_3.jpg",
+        "correctAnswer": 2
+},
+
+{
+        "sid": 8,
+        "id": "q8",
+        "name": "Какой кадр сделан из итальянского фильма?",
+        "answer1": "Ответ1",
+        "answer2": "Ответ2",
+        "answer3": "Ответ3",
+        "img1": "img/img8_1.jpg",
+        "img2": "img/img8_2.jpg",
+        "img3": "img/img8_3.jpg",
+        "correctAnswer": 2
+}
+
+]

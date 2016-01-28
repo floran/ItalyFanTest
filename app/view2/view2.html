@@ -1,0 +1,10 @@
+<div ng-controller="View2Ctrl">
+	<p>Вопрос {{elem.sid}}: {{elem.name}}</p>
+
+	<table>
+	<tr><td><img ng-src={{elem.img1}}/></td><td><img ng-src="{{elem.img2}}"/></td><td><img ng-src={{elem.img3}}/></td></tr>
+	<tr><td><input type="radio" ng-model="answer" value="1" ng-change="chooseAns(answer)">{{elem.answer1}}</td>
+	<td><input type="radio" ng-model="answer" value="2" ng-change="chooseAns(answer)">{{elem.answer2}}</td>
+	<td><input type="radio" ng-model="answer" value="3" ng-change="chooseAns(answer)">{{elem.answer3}}</td></tr>
+	<tr><td colspan = 3><a href="{{elemlink}}">{{elemnext}}</a></td></tr>
+</div>
