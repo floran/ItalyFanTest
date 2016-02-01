@@ -1,10 +1,8 @@
 'use strict';
 
-
 var myApp = angular.module('myItalyApp', ['ngRoute', 'ngCookies', 'ngResource']);
 
-
-  myApp.config( ['$routeProvider', function($routeProvider) {
+myApp.config( ['$routeProvider', function($routeProvider) {
   $routeProvider
 	.when('/view1', {
    		templateUrl: 'view1/view1.html',
@@ -22,15 +20,37 @@ var myApp = angular.module('myItalyApp', ['ngRoute', 'ngCookies', 'ngResource'])
     		templateUrl: 'view1/view1.html',
     		controller:  'View1Ctrl'
   	});
-  }]);
+	}
+]);
 
 
-myApp.factory('Qlist', ['$resource', function($resource){
-        return $resource('questions.json', {}, {
-                query: {method:'GET', params:{}, isArray:true}
-        });
-}]);
+myApp.service('myService', function($http, $q) {
+	var _this = this;
+	_this.qlArr = [];
+	_this.qlLen = 0;
 
+	 this.promiseToHaveData = function() {
+
+                var defer = $q.defer();
+
+                $http.get('questions.json')
+                .success(function(data) {
+                        for (var x=0; x < data.length; x++)
+                                _this.qlArr[x] = data[x];
+                        _this.qlLen = data.length;
+                        defer.resolve();
+                })
+                .error(function() {
+                        defer.reject('could not find someFile.json');
+                });
+
+                 return defer.promise;
+        }
+        _this.promiseToHaveData();
+
+
+	return _this.qlArr;
+});
 
 myApp.controller('View1Ctrl', function($scope, $http) {	
 
@@ -41,17 +61,24 @@ myApp.controller('View1Ctrl', function($scope, $http) {
 });
 
 
-myApp.controller('View2Ctrl', function($scope, $routeParams, $http, $cookies) {
+myApp.controller('View2Ctrl', function($scope, $routeParams, $http, $cookies, myService) {
+	
+	
+	var _ql = [];
+	_ql = myService; 
+	$scope.ql = _ql;
+	$scope.qll = _ql[1];
+	
 
 	/*init scope variables*/
 	$scope.elemnext = "";
 	
 	/*get info about current test question*/
-        $http.get('questions.json').success(function(data){
-                
-		$scope.elem = data[$routeParams.questionId-1];
+	$http.get('questions.json').success(function(data){
+                $scope.elem = data[$routeParams.questionId-1];
         });
-
+	
+	/*$scope.elem = _ql[1];*/
 	
 	$scope.chooseAns = function(answer){
 
