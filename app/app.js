@@ -92,13 +92,13 @@ myApp.controller('View2Ctrl', function($scope, $routeParams, $http, $cookies, my
                 $scope.elem = data[sid-1];
 
 		if (sid < data.length){
-                	$scope._elemnext = "Следующий вопрос";
+                	$scope.elemnext = "Следующий вопрос";
                 	var temp = parseInt(sid,10) + 1;
-                	$scope._elemlink = "#/view2/" + temp.toString();
+                	$scope.elemlink = "#/view2/" + temp.toString();
                         }
                 else{
-               		 $scope._elemnext = "Вычислить результат теста";
-               		 $scope._elemlink = "#/view3";
+               		 $scope.elemnext = "Вычислить результат теста";
+               		 $scope.elemlink = "#/view3";
                 }
 	});	
 
@@ -111,7 +111,7 @@ myApp.controller('View2Ctrl', function($scope, $routeParams, $http, $cookies, my
 	});*/	
 
 	/*init scope variables*/
-	$scope.elemnext = "";
+	$scope.elemnext_show = false;
         
 
 	
@@ -135,8 +135,8 @@ myApp.controller('View2Ctrl', function($scope, $routeParams, $http, $cookies, my
 			cookieStr = tempCookieArr.toString();
 		} 
 		$cookies.put("testAnswers", cookieStr);
-		$scope.elemnext = $scope._elemnext;
-                $scope.elemlink = $scope._elemlink;
+		$scope.elemnext_show = true;
+                
 	}
 
 });
