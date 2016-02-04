@@ -1,8 +1,10 @@
 'use strict';
 
-var myApp = angular.module('myItalyApp', ['ngRoute', 'ngCookies', 'ngResource']);
+var myApp = angular.module('myItalyApp', ['ngRoute', 'ngCookies']);
+
 
 myApp.config( ['$routeProvider', function($routeProvider) {
+
   $routeProvider
 	.when('/view1', {
    		templateUrl: 'view1/view1.html',
@@ -24,38 +26,12 @@ myApp.config( ['$routeProvider', function($routeProvider) {
 ]);
 
 
-myApp.service('myService', function($http, $q) {
-	var _this = this;
-	_this.qlArr = [];
-
-	 this.promiseToHaveData = function(callback) {
-
-                var defer = $q.defer();
-
-                $http.get('questions.json')
-                .success(function(data) {
-                        for (var x=0; x < data.length; x++)
-                                _this.qlArr[x] = data[x];
-            
-			callback(_this.qlArr);
-                        defer.resolve();
-                })
-                .error(function() {
-                        defer.reject('could not find someFile.json');
-                });
-
-                 return defer.promise;
-        }
-        
-});
-
 myApp.service('myService_1', function($http, $q) {
         var _this = this;
         _this.qlArr = [];
 
-         this.promiseToHaveData = function(sid, callbackF) {
+         this.promiseToHaveData = function(callback) {
 
-		_this.sid = sid;
                 var defer = $q.defer();
 
                 $http.get('questions.json')
@@ -63,64 +39,55 @@ myApp.service('myService_1', function($http, $q) {
                         for (var x=0; x < data.length; x++)
                                 _this.qlArr[x] = data[x];
 
-                        callbackF(_this.sid, _this.qlArr);
+                        callback (_this.qlArr);
                         defer.resolve();
                 })
                 .error(function() {
                         defer.reject('could not find someFile.json');
                 });
-	}
+        }
 
 });
 
-myApp.controller('View1Ctrl', function($scope, $http) {	
 
-	$http.get('questions.json').success(function(data){
-		$scope.questions = data;
-	});
+myApp.controller('BodyInit', function($rootScope, myService_1) {
+
+        $rootScope.restart=false;
+
+        myService_1.promiseToHaveData(function(data){
+
+                $rootScope.questions = data;
+        });
+
+});
+
+
+myApp.controller('View1Ctrl', function($scope, $rootScope, $http, myService_1) {	
+
+	$rootScope.restart=false;
 	
 });
 
 
-myApp.controller('View2Ctrl', function($scope, $routeParams, $http, $cookies, myService, myService_1) {
-	
-	myService_1.promiseToHaveData($routeParams.questionId, function(sid, data){
+myApp.controller('View2Ctrl', function($scope, $rootScope, $routeParams, $http, $cookies, myService_1) {
 
-	 	$scope.ql = data;
-                $scope.qll = data[1];
-                $scope.a = $scope.qll;
-                $scope.elem = data[sid-1];
-
-		if (sid < data.length){
-                	$scope.elemnext = "Следующий вопрос";
-                	var temp = parseInt(sid,10) + 1;
-                	$scope.elemlink = "#/view2/" + temp.toString();
-                        }
-                else{
-               		 $scope.elemnext = "Вычислить результат теста";
-               		 $scope.elemlink = "#/view3";
-                }
-	});	
-
-	/*myService.promiseToHaveData(function(data){
-	
-		var _ql = data; 
-        	$scope.ql = _ql;
-        	$scope.qll = _ql[1];
-        	$scope.a = _ql[1]; 
-	});*/	
-
-	/*init scope variables*/
+	// init variables
+	$rootScope.restart=false;
 	$scope.elemnext_show = false;
-        
 
-	
-	/*get info about current test question*/
-	//$http.get('questions.json').success(function(data){
-        //        $scope.elem = data[$routeParams.questionId-1];
-        //});
+        $scope.elem = myService_1.qlArr[$routeParams.questionId-1];
 
-	
+        if ($routeParams.questionId < myService_1.qlArr.length){
+        	$scope.elemnext = "Следующий вопрос";
+                var temp = parseInt($routeParams.questionId,10) + 1;
+                $scope.elemlink = "#/view2/" + temp.toString();
+        }
+        else{
+        	$scope.elemnext = "Вычислить результат теста";
+                $scope.elemlink = "#/view3";
+        }
+		
+
 	$scope.chooseAns = function(answer){
 
 		/*update cookies*/
@@ -141,25 +108,22 @@ myApp.controller('View2Ctrl', function($scope, $routeParams, $http, $cookies, my
 
 });
 
-myApp.controller('View3Ctrl', function($scope, $http, $cookies) {
+myApp.controller('View3Ctrl', function($scope, $rootScope, $http, $cookies, myService_1) {
 	
-        
-	$http.get('questions.json').success(function(data){
+        $rootScope.restart=true;
 	
-		var tempCookieArr = $cookies.get("testAnswers").split(",");
+	var tempCookieArr = $cookies.get("testAnswers").split(",");
 
-		var result_ = 0;
-	        var i = 0;
+	var result_ = 0;
+	var i = 0;
 		
-		for (; i < data.length; i++){
+	for (; i < myService_1.qlArr.length; i++){
 
-                	if (data[i].correctAnswer == tempCookieArr[i])
-                        	result_ ++;
-        	}
+                if (myService_1.qlArr[i].correctAnswer == tempCookieArr[i])
+                       	result_ ++;
+        }
 
-        	$scope.result = result_;
-		$scope.total = data.length;
-
-        });
+        $scope.result = result_;
+	$scope.total = myService_1.qlArr.length;
 
 });
